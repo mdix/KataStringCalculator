@@ -4,9 +4,9 @@ function add(numberString) {
     var regExpString = '(,|\n|customDelimiter)';
 
     if (_hasCustomDelimiter(numberString)) {
-        customDelimiter     = _getCustomDelimiter(numberString);
-        regExpString        = regExpString.replace('customDelimiter', customDelimiter);
-        numberString        = _clearDelimiterPartFromString(numberString);
+        customDelimiter = _getCustomDelimiter(numberString);
+        regExpString    = regExpString.replace('customDelimiter', customDelimiter);
+        numberString    = _clearDelimiterPartFromString(numberString);
     }
 
     numberArray = _splitNumberStringByRegExpString(numberString, regExpString);
