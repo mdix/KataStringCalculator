@@ -1,0 +1,11 @@
+src_files:
+    - src/**
+
+spec_files:
+    - test/**
+
+src_dir:
+    - .
+
+spec_dir:
+    - .

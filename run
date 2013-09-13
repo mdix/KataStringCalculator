@@ -1,0 +1,3 @@
+#!/bin/bash
+
+jasmine-headless-webkit -j jasmine.yml -c
