@@ -46,28 +46,47 @@ describe("add()", function() {
             expect(add("10\n20,50,30\n20,10")).toEqual(140); 
         });
     });
-    
-    describe("uses a custom delimiter", function() {
-        it("called with the string '//;\n10;20;30' returns the sum (60)", function() {
-            expect(add('//;\n10;20;30')).toEqual(60); 
+
+    describe("custom delimiter", function() {
+        describe("uses a single custom delimiter", function() {
+            it("called with the string '//;\n10;20;30' returns the sum (60)", function() {
+                expect(add('//;\n10;20;30')).toEqual(60);
+            });
+            it("called with the string '//#\n10#20#30' returns the sum (60)", function() {
+                expect(add('//#\n10#20#30')).toEqual(60);
+            });
+            it("called with the string '//[\n10[20[30' returns the sum (60)", function() {
+                expect(add('//[\n10[20[30')).toEqual(60);
+            });
+            it("called with the string '//]\n10]20]30' returns the sum (60)", function() {
+                expect(add('//]\n10]20]30')).toEqual(60);
+            });
+            it("called with the string '//;;;\n10;;;20;;;30' returns the sum (60)", function() {
+                expect(add('//;;;\n10;;;20;;;30')).toEqual(60);
+            });
+            it("called with the string '//---\n10---20---30' returns the sum (60)", function() {
+                expect(add('//---\n10---20---30')).toEqual(60);
+            });
+            it("called with the string '//***\n10***20***30' returns the sum (60)", function() {
+                expect(add('//***\n10***20***30')).toEqual(60);
+            });
+            it("called with the string '//+++\n10+++20+++30' returns the sum (60)", function() {
+                expect(add('//+++\n10+++20+++30')).toEqual(60);
+            });
         });
-        it("called with the string '//#\n10#20#30' returns the sum (60)", function() {
-            expect(add('//#\n10#20#30')).toEqual(60); 
-        }); 
-        it("called with the string '//;;;\n10;;;20;;;30' returns the sum (60)", function() {
-            expect(add('//;;;\n10;;;20;;;30')).toEqual(60); 
-        });
-        it("called with the string '//---\n10---20---30' returns the sum (60)", function() {
-            expect(add('//---\n10---20---30')).toEqual(60); 
-        });
-        it("called with the string '//***\n10***20***30' returns the sum (60)", function() {
-            expect(add('//***\n10***20***30')).toEqual(60); 
-        });
-        it("called with the string '//+++\n10+++20+++30' returns the sum (60)", function() {
-            expect(add('//+++\n10+++20+++30')).toEqual(60); 
+        describe("uses multiple custom delimiters", function() {
+            it("called with the string '//[;][+]\n10+20;30+10' returns the sum (70)", function() {
+                expect(add('//[;][+]\n10+20;30+10')).toEqual(70);
+            });
+            it("called with the string '//[,][-]\n10,20-30-10' returns the sum (70)", function() {
+                expect(add('//[,][-]\n10,20-30-10')).toEqual(70);
+            });
+            it("called with the string '//[,]\n10,20,30,10' returns the sum (70)", function() {
+                expect(add('//[,]\n10,20,30,10')).toEqual(70);
+            });
         });
     });
-    
+
     describe("called with a string of (a) negativ(e) number(s)", function() {
         it("like '-1', throws an error", function() {
             expect(function() { add('-1'); }).toThrow(new Error("Negatives not allowed: -1"));

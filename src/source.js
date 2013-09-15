@@ -26,9 +26,37 @@ function _hasCustomDelimiter(string) {
 }
 
 function _getCustomDelimiter(string) {
+    if (_hasMultipleCustomDelimiter(string)) {
+        return _getMultipleCustomDelimiters(string)
+    } else {
+        return _getSingleCustomDelimiter(string);
+    }
+}
+
+function _hasMultipleCustomDelimiter(string) {
+    if (string.substr(2,1) === '[' && string.substr(4,1) === ']') {
+        return true;
+    }
+    return false;
+}
+
+function _getMultipleCustomDelimiters(string) {
+    var delimiters = [];
+    var partlyIdentifiedDelimiters = string.substring(2).split('[');
+    for (var i = 0; i < partlyIdentifiedDelimiters.length; i++) {
+        var end = partlyIdentifiedDelimiters[i].indexOf(']');
+        if (end === -1) {
+            continue;
+        }
+        delimiters.push(partlyIdentifiedDelimiters[i].substr(0, end));
+    }
+    return delimiters.join('|');
+}
+
+function _getSingleCustomDelimiter(string) {
     var endOfDelimiter    = string.indexOf('\n');
-    var lengthOfDelimiter = endOfDelimiter - 2; 
-    return string.substr(2,lengthOfDelimiter); 
+    var lengthOfDelimiter = endOfDelimiter - 2;
+    return string.substr(2,lengthOfDelimiter);
 }
 
 function _clearDelimiterPartFromString(string) {
@@ -37,7 +65,7 @@ function _clearDelimiterPartFromString(string) {
 }
 
 function _splitNumberStringByRegExpString(numberString, regExpString) {
-    var escapedRegExpString = regExpString.replace(/(\*|\+|\?|\.|\\|\^|\$)/g, '\\$&');
+    var escapedRegExpString = regExpString.replace(/(\*|\+|\?|\.|\\|\^|\$|\[|\])/g, '\\$&');
     return numberString.split(new RegExp(escapedRegExpString, "g"));
 }
 
